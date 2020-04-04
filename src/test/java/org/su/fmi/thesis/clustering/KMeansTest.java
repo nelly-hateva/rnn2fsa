@@ -1,21 +1,33 @@
 package org.su.fmi.thesis.clustering;
 
-import org.junit.jupiter.api.Disabled;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
+import java.util.Random;
 import org.junit.jupiter.api.Test;
 import org.su.fmi.thesis.clustering.distances.EuclideanDistance;
 import org.su.fmi.thesis.clustering.model.Vectors;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class KMeansTest {
+
+    private static void assertCentroidsEquals(double[][] expected, double[][] actual) {
+
+        assertEquals(expected.length, actual.length);
+
+        for (double[] centroid1 : expected) {
+
+            boolean found = false;
+            for (double[] centroid2 : actual) {
+                if (Arrays.equals(centroid1, centroid2)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            assertTrue(found);
+        }
+    }
 
     @Test
     void test0() {
@@ -26,21 +38,18 @@ class KMeansTest {
         int[] weights = new int[N];
         double[][] vectors = new double[N][D];
 
-        Random r = new Random(666L);
-        // r.nextInt();  changes the centroids, is this expected?
+        Random random = new Random(666L);
         Arrays.fill(weights, 1);
         for (int i = 0; i < vectors.length; ++i) {
             for (int j = 0; j < vectors[i].length; ++j) {
-                vectors[i][j] = r.nextDouble();
+                vectors[i][j] = random.nextDouble();
             }
         }
+
         KMeans kMeans = new KMeans(new Vectors(vectors, weights), N, new EuclideanDistance());
         kMeans.fit();
 
-        Set<Integer> clusters = IntStream.of(kMeans.clusters).boxed().collect(Collectors.toCollection(HashSet::new));
-        assertEquals(N, clusters.size());
-
-        assertArrayEquals(vectors, kMeans.centroids);
+        assertCentroidsEquals(vectors, kMeans.centroids);
     }
 
     @Test
@@ -64,10 +73,9 @@ class KMeansTest {
                 {55.1d, 46.1d},
                 {29.6d, 66.8d}
         };
-        assertArrayEquals(expectedCentroids, kMeans.centroids);
+        assertCentroidsEquals(expectedCentroids, kMeans.centroids);
     }
 
-    @Disabled
     @Test
     void test2() {
         // compare results with this example https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
@@ -80,16 +88,10 @@ class KMeansTest {
         KMeans kMeans = new KMeans(new Vectors(vectors, weights), 2, new EuclideanDistance());
         kMeans.fit();
 
-//        float[][] expectedCentroids = new float[][]{
-//                {10.0f, 2.0f},
-//                {1.0f, 2.0f}
-//        };
-//        assertArrayEquals(expectedCentroids, kMeans.centroids);
-//        for (int i = 0; i < kMeans.centroids.length; ++i) {
-//            for (int j = 0; j < kMeans.centroids[i].length; ++j) {
-//                System.out.print(kMeans.centroids[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
+        double[][] expectedCentroids = new double[][]{
+                {10.0f, 2.0f},
+                {1.0f, 2.0f}
+        };
+        assertCentroidsEquals(expectedCentroids, kMeans.centroids);
     }
 }

@@ -1,5 +1,14 @@
 package org.su.fmi.thesis.experiments;
 
+import static org.su.fmi.thesis.clustering.distances.Utils.covarianceMatrix;
+import static org.su.fmi.thesis.clustering.distances.Utils.inverseMatrix;
+import static org.su.fmi.thesis.clustering.distances.Utils.nonDegenerate;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import org.su.fmi.thesis.clustering.KMeans;
 import org.su.fmi.thesis.clustering.distances.Distance;
 import org.su.fmi.thesis.clustering.distances.EuclideanDistance;
@@ -8,26 +17,16 @@ import org.su.fmi.thesis.clustering.distances.StandardizedEuclideanDistance;
 import org.su.fmi.thesis.clustering.model.Vectors;
 import org.su.fmi.thesis.experiments.ioutils.VectorsReader;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-
-import static org.su.fmi.thesis.clustering.distances.Utils.covarianceMatrix;
-import static org.su.fmi.thesis.clustering.distances.Utils.nonDegenerate;
-import static org.su.fmi.thesis.clustering.distances.Utils.inverseMatrix;
-
 public class KMeansMain {
 
     public static void main(String[] args) throws Exception {
 
         if (args.length != 5) {
-            System.out.println("Usage: <dir> N K D <ED|SED|M>");
+            System.out.println("Usage: <input-file> N K D <ED|SED|M>");
             System.exit(1);
         }
 
-        File dir = new File(args[0]);
+        File file = new File(args[0]);
 
         int N = Integer.parseInt(args[1]);
         int K = Integer.parseInt(args[2]);
@@ -40,7 +39,7 @@ public class KMeansMain {
             System.exit(1);
         }
 
-        Vectors vectors = VectorsReader.parseVectors(new File(dir, "vectors.txt"), N, D);
+        Vectors vectors = VectorsReader.parseVectors(file, N, D);
 
         Distance distance;
         if (dist.equals("ED")) {
@@ -58,7 +57,7 @@ public class KMeansMain {
             }
         }
 
-        clustering(vectors, N, D, K, dir, distance);
+        clustering(vectors, N, D, K, file, distance);
     }
 
     private static void clustering(Vectors vectors, int N, int D, int K, File f, Distance distance)
@@ -69,7 +68,7 @@ public class KMeansMain {
         kMeans.fit();
 
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-                new File(f, String.format("kmeans-" + distance.displayName() + "-assignments-k=%d.txt", K))
+                new File(f.getParent(), String.format(f.getName() + ".assignments.txt", K))
         )))) {
             for (int i = 0; i < N; i++) {
                 bw.write(String.valueOf(kMeans.clusters[i]));
@@ -78,7 +77,7 @@ public class KMeansMain {
         }
 
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-                new File(f, String.format("kmeans-" + distance.displayName() + "-centroids-k=%d.txt", K))
+                new File(f.getParent(), String.format(f.getName() + ".centroids.txt", K))
         )))) {
             for (int k = 0; k < K; k++) {
                 for (int d = 0; d < D; d++) {

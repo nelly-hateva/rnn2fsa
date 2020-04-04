@@ -1,8 +1,5 @@
 package org.su.fmi.thesis.clustering;
 
-import org.su.fmi.thesis.clustering.distances.Distance;
-import org.su.fmi.thesis.clustering.model.Vectors;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -10,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
+import org.su.fmi.thesis.clustering.distances.Distance;
+import org.su.fmi.thesis.clustering.model.Vectors;
 
 public class KMeans {
 
@@ -46,22 +45,11 @@ public class KMeans {
     public void fit() {
         long start = System.currentTimeMillis();
 
-        // Initialize K centroids to random K vectors
         long t0 = System.currentTimeMillis();
-
-        Set<Integer> randomIndices = new HashSet<>();
-        while (randomIndices.size() < K) {
-            randomIndices.add(random.nextInt(N));
-        }
-
-        // TODO initialize k++ first point at random the next as far as possible
-        List<Integer> randomIndexes = new ArrayList<>(randomIndices);
-        IntStream.range(0, K).parallel().forEach(
-                j -> System.arraycopy(data.vectors[randomIndexes.get(j)], 0, centroids[j], 0, D)
-        );
+        initialization();
         System.out.println(
-                "Finished centroids initialization in " + (System.currentTimeMillis() - t0)
-                        + " milliseconds"
+            "Finished centroids initialization in " + (System.currentTimeMillis() - t0)
+                + " milliseconds"
         );
 
         t0 = System.currentTimeMillis();
@@ -114,6 +102,56 @@ public class KMeans {
                 clusters[i] = j;
             }
         }
+    }
+
+    private void initialization() {
+        // k-means++
+
+        int numberOfClusters = 0;
+        int index = random.nextInt(N);
+        System.arraycopy(data.vectors[index], 0, centroids[numberOfClusters], 0, D);
+        ++numberOfClusters;
+
+        // compute remaining k - 1 centroids
+        while (numberOfClusters < K) {
+
+            // distances of data points from nearest centroid
+            double[] distances = new double[N];
+
+          int finalNumberOfClusters = numberOfClusters;
+          IntStream.range(0, N).parallel().forEach(i -> {
+                // compute minimum distance to previously selected centroids
+                double minDist = Double.MAX_VALUE;
+
+                for (int j = 0; j < finalNumberOfClusters; ++j) {
+                    double dist = distance.distance(data.vectors[i], centroids[j]);
+                    if (dist < minDist) {
+                        minDist = dist;
+                    }
+                }
+
+                distances[i] = minDist;
+            });
+
+            // select data point with maximum distance as our next centroid
+            int nextCentroid = argMax(distances);
+            System.arraycopy(data.vectors[nextCentroid], 0, centroids[numberOfClusters], 0, D);
+            ++numberOfClusters;
+      }
+    }
+
+    private int argMax(double[] distances) {
+        double max = Double.MIN_VALUE;
+        int argMax = -1;
+
+        for (int i = 0; i < distances.length; ++i) {
+            if (distances[i] > max) {
+                max = distances[i];
+                argMax = i;
+            }
+        }
+
+        return argMax;
     }
 
     private List<Set<Integer>> assignment() {

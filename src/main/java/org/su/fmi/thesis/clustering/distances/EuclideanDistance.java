@@ -1,6 +1,7 @@
 package org.su.fmi.thesis.clustering.distances;
 
 public class EuclideanDistance implements Distance {
+
     @Override
     public double distance(double[] v1, double[] v2) {
         double dist = 0;
