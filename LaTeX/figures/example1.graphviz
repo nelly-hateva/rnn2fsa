@@ -1,0 +1,25 @@
+digraph finite_state_machine {
+    rankdir=LR;
+    charset="UTF-8";
+    size="8,5"
+    secret_node [style=invis]
+    node [shape = doublecircle]; q_4 q_5 q_6;
+    node [shape = circle];
+    secret_node -> q_0;
+    q_0 -> q_1  [ label = "&#1095;" ];
+    q_0 -> q_8  [ label = "&#1103;" ];
+    q_1 -> q_2  [ label = "&#1077;" ];
+    q_2 -> q_3  [ label = "&#1090;" ];
+    q_3 -> q_4  [ label = "&#1072;" ];
+    q_4 -> q_5  [ label = "&#1090;" ];
+    q_3 -> q_6  [ label = "&#1077;" ];
+    q_6 -> q_5  [ label = "&#1084;" ];
+    q_6 -> q_5  [ label = "&#1096;" ];
+    q_6 -> q_7  [ label = "&#1090;" ];
+    q_7 -> q_5  [ label = "&#1077;" ];
+    q_8 -> q_9  [ label = "&#1076;" ];
+    q_9 -> q_6  [ label = "&#1077;" ];
+    q_8 -> q_5  [ label = "&#1084;" ];
+    q_9 -> q_10 [ label = "&#1072;" ];
+    q_10 -> q_5 [ label = "&#1090;" ];
+}
