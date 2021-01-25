@@ -1,5 +1,8 @@
 package org.su.fmi.thesis.clustering;
 
+import org.su.fmi.thesis.clustering.distances.Distance;
+import org.su.fmi.thesis.clustering.model.Vectors;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -7,8 +10,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
-import org.su.fmi.thesis.clustering.distances.Distance;
-import org.su.fmi.thesis.clustering.model.Vectors;
 
 public class KMeans {
 
@@ -48,8 +49,8 @@ public class KMeans {
         long t0 = System.currentTimeMillis();
         initialization();
         System.out.println(
-            "Finished centroids initialization in " + (System.currentTimeMillis() - t0)
-                + " milliseconds"
+                "Finished centroids initialization in " + (System.currentTimeMillis() - t0)
+                        + " milliseconds"
         );
 
         t0 = System.currentTimeMillis();
@@ -118,8 +119,8 @@ public class KMeans {
             // distances of data points from nearest centroid
             double[] distances = new double[N];
 
-          int finalNumberOfClusters = numberOfClusters;
-          IntStream.range(0, N).parallel().forEach(i -> {
+            int finalNumberOfClusters = numberOfClusters;
+            IntStream.range(0, N).parallel().forEach(i -> {
                 // compute minimum distance to previously selected centroids
                 double minDist = Double.MAX_VALUE;
 
@@ -137,7 +138,7 @@ public class KMeans {
             int nextCentroid = argMax(distances);
             System.arraycopy(data.vectors[nextCentroid], 0, centroids[numberOfClusters], 0, D);
             ++numberOfClusters;
-      }
+        }
     }
 
     private int argMax(double[] distances) {

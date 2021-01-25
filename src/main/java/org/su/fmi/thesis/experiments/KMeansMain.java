@@ -1,14 +1,5 @@
 package org.su.fmi.thesis.experiments;
 
-import static org.su.fmi.thesis.clustering.distances.Utils.covarianceMatrix;
-import static org.su.fmi.thesis.clustering.distances.Utils.inverseMatrix;
-import static org.su.fmi.thesis.clustering.distances.Utils.nonDegenerate;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import org.su.fmi.thesis.clustering.KMeans;
 import org.su.fmi.thesis.clustering.distances.Distance;
 import org.su.fmi.thesis.clustering.distances.EuclideanDistance;
@@ -16,6 +7,16 @@ import org.su.fmi.thesis.clustering.distances.MahalanobisDistance;
 import org.su.fmi.thesis.clustering.distances.StandardizedEuclideanDistance;
 import org.su.fmi.thesis.clustering.model.Vectors;
 import org.su.fmi.thesis.experiments.ioutils.VectorsReader;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+import static org.su.fmi.thesis.clustering.distances.Utils.covarianceMatrix;
+import static org.su.fmi.thesis.clustering.distances.Utils.inverseMatrix;
+import static org.su.fmi.thesis.clustering.distances.Utils.nonDegenerate;
 
 public class KMeansMain {
 
