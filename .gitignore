@@ -54,3 +54,5 @@ buildNumber.properties
 *.blg
 *.bbl
 
+### Python ###
+__pycache__/
