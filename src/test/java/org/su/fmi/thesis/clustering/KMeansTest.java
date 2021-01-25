@@ -1,13 +1,14 @@
 package org.su.fmi.thesis.clustering;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Arrays;
-import java.util.Random;
 import org.junit.jupiter.api.Test;
 import org.su.fmi.thesis.clustering.distances.EuclideanDistance;
 import org.su.fmi.thesis.clustering.model.Vectors;
+
+import java.util.Arrays;
+import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class KMeansTest {
 

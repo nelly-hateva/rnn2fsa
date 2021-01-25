@@ -1,4 +1,4 @@
-# RRN2FSA
+# RNN2FSA
 
 ## Prerequisites
 
@@ -12,8 +12,8 @@ Setup virtual environment
 
 ````
 mkdir ~/.venv
-python3 -m venv ~/.venv/tardis
-source ~/.venv/tardis/bin/activate
+python3 -m venv ~/.venv/rnn2fsa
+source ~/.venv/rnn2fsa/bin/activate
 pip3 install -r requirements.txt
 ````
 
@@ -22,6 +22,6 @@ pip3 install -r requirements.txt
 Run the tests with
 
 ```
-source ~/.venv/tardis/bin/activate
+source ~/.venv/rnn2fsa/bin/activate
 python3 -m unittest
 ```

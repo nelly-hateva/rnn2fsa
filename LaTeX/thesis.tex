@@ -526,6 +526,25 @@ TEST & 119 & 58 & 61\\
 \centering
 \begin{tabular}{|c|c|c|c|}
 \hline
+BG Open Office & Минимална дължина & Максимална дължина & Средна дължина\\
+\hline
+TRAIN & 2 & 19 & 10.52\\
+\hline
+DEV & 2 & 16 & 10.27\\
+\hline
+TEST & 3 & 17 & 10.33\\
+\hline
+Общо & 2 & 19 & 10.48\\
+\hline
+\end{tabular}
+\caption{Статистика за дължините на думите от BG Open Office, класифицирани като числителни}
+\label{table:2}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
 BG Open Office & Брой примери & Негативни & Позитивни\\
 \hline
 TRAIN & 1 154 917 & 577 343 & 577574\\
@@ -538,7 +557,7 @@ TEST & 144 365 & 72 176 & 72 189\\
 \hline
 \end{tabular}
 \caption{Речник BG Open Office}
-\label{table:2}
+\label{table:3}
 \end{table}
 
 \begin{table}[h!]
@@ -556,8 +575,8 @@ TEST & 1 & 24 & 10.08\\
 Общо & 1 & 26 & 10.07\\
 \hline
 \end{tabular}
-\caption{Речник BG Open Office}
-\label{table:2}
+\caption{Статистика за дължините на думите от речника BG Open Office}
+\label{table:4}
 \end{table}
 
 Тренираме базовия модел като нагласяме хиперпараметрите на модела ръчно, така че да постигнем оценка на модела над 0.9. Работим със следния модел
@@ -576,7 +595,7 @@ TEST & 59 & 49 & 9 & 2 & 0.87 & 0.97 & 0.91 & 0.91\\
 \hline
 \end{tabular}
 \caption{Оценка на базовия модел за речника от числителни}
-\label{table:2}
+\label{table:5}
 \end{table}
 
 Хиперпараметри:
@@ -600,7 +619,7 @@ TEST & 59 & 49 & 9 & 2 & 0.87 & 0.97 & 0.91 & 0.91\\
 
 \section{Имплементация}
 
-Приложен е кодът, използван за експериментите. Същият може да бъде намерен и на следния адрес https://github.com/nelly-hateva/tardis.
+Приложен е кодът, използван за експериментите. Същият може да бъде намерен и на следния адрес https://github.com/nelly-hateva/rnn2fsa.
 
 TODO
 
