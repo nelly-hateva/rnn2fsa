@@ -1,5 +1,8 @@
 import math
 
+import torch
+from torch import nn
+
 output = torch.tensor([[0.2784, 0.0618],
                        [0.3401, -0.0615],
                        [0.3401, -0.0615]])
