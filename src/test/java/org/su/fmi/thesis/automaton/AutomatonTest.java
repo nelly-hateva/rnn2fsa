@@ -25,6 +25,7 @@ class AutomatonTest {
             String line;
 
             while ((line = br.readLine()) != null) {
+                line = line.toLowerCase();
                 int prev_state = initial_state;
                 for (int i = 0; i < line.length(); i++) {
                     a.addTransition(prev_state, line.charAt(i), states_count);
@@ -60,6 +61,7 @@ class AutomatonTest {
             String line;
 
             while ((line = br.readLine()) != null) {
+                line = line.toLowerCase();
                 int prev_state = initial_state;
                 for (int i = 0; i < line.length(); i++) {
                     a.addTransition(prev_state, line.charAt(i), states_count);
@@ -95,6 +97,7 @@ class AutomatonTest {
             String line;
 
             while ((line = br.readLine()) != null) {
+                line = line.toLowerCase();
                 int prev_state = initial_state;
                 for (int i = 0; i < line.length(); i++) {
                     a.addTransition(prev_state, line.charAt(i), states_count);
@@ -111,9 +114,9 @@ class AutomatonTest {
         a = a.determinize();
         a = a.minimize();
 
-        assertEquals(31463, a.getNumberOfStates());
-        assertEquals(78338, a.getNumberOfTransitions());
-        assertEquals(4426, a.getNumberOfFinalStates());
+        assertEquals(30568, a.getNumberOfStates());
+        assertEquals(77838, a.getNumberOfTransitions());
+        assertEquals(4826, a.getNumberOfFinalStates());
     }
 
     @Test
@@ -130,6 +133,7 @@ class AutomatonTest {
             String line;
 
             while ((line = br.readLine()) != null) {
+                line = line.toLowerCase();
                 int prev_state = initial_state;
                 for (int i = 0; i < line.length(); i++) {
                     a.addTransition(prev_state, line.charAt(i), states_count);
